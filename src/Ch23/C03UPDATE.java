@@ -26,8 +26,8 @@ public class C03UPDATE {
 			pstmt.setString(1, "changwon");
 			pstmt.setString(2, "홍길동");
 			int result = pstmt.executeUpdate();
-			if(result>0) System.out.println("Insert 성공!");
-			else System.out.println("Insert 실패~");
+			if(result>0) System.out.println("update 성공!");
+			else System.out.println("update 실패~");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
