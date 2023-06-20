@@ -8,34 +8,38 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class Main2 {
+public class Main1 {
 
 	public static void main(String[] args) {
-		new GUI1();
+		new GUI();
 	}
 
 }
 
-class GUI1 extends JFrame implements ActionListener, KeyListener {
+class GUI extends JFrame implements ActionListener, KeyListener {
 	JButton btn1;
 	JButton btn2;
-	JButton btn3;
+//	JButton btn3;
 	JButton btn4;
 	JButton btn5;
 	
 	JTable tbl1;
 	JTable tbl2;
+	JLabel txt3;
+	
 	JTextArea area1;
 	JScrollPane scroll1;
 	JScrollPane scroll2;
 
-	GUI1() {
+	GUI() {
 		// Frame
 		super("다 같이 게시판");
 		setBounds(100, 100, 900, 900);
@@ -43,17 +47,18 @@ class GUI1 extends JFrame implements ActionListener, KeyListener {
 
 		// Panel
 		JPanel panel = new JPanel(); // 패널생성
+		
 		panel.setLayout(null);
 
 
 		// Component
 		btn1 = new JButton("글 작성");
 		btn2 = new JButton("내가 쓴글");
-		btn3 = new JButton("다 같이 게시판");
 		btn4 = new JButton("종료");
 		btn5 = new JButton("검색");
 		tbl1 = new JTable();
 		tbl2 = new JTable();
+		txt3 = new JLabel("다 같이 게시판");
 		area1 = new JTextArea();
 		// area1.setBounds(10,90,210,300);
 		scroll1 = new JScrollPane(area1);
@@ -64,10 +69,11 @@ class GUI1 extends JFrame implements ActionListener, KeyListener {
 		// Positioning
 		tbl1.setBounds(10, 130, 860, 200);		//인기글
 		tbl2.setBounds(10, 340, 860, 450);		//메인글
+		txt3.setBounds(280, 10, 300, 60);		//제목
 		
 		btn1.setBounds(680, 80, 90, 30);		//글작성
 		btn2.setBounds(780, 80, 90, 30);		//내가 쓴 글
-		btn3.setBounds(10, 10, 860, 60);		//제목
+//		btn3.setBounds(10, 10, 860, 60);		//제목
 		btn4.setBounds(770, 800, 90, 30); 		// 나가기
 		btn5.setBounds(160, 800, 60, 30); 		// 검색
 		
@@ -81,15 +87,24 @@ class GUI1 extends JFrame implements ActionListener, KeyListener {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new GUI();	
+				new GUI1();	
 			}
 		});		//글작성
-		btn2.addActionListener(this);		//내가 쓴 글
-		btn3.addActionListener(this);		//제목
+		
+		btn2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new GUI2();
+			}
+		});
+//		btn2.addActionListener(this);		//내가 쓴 글
+//		btn3.addActionListener(this);		//제목
 		btn4.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) { 	//종료
+				JOptionPane.showMessageDialog(null, "프로그램 종료하실?");
 				System.exit(0);
 			}
 		});		
@@ -98,19 +113,28 @@ class GUI1 extends JFrame implements ActionListener, KeyListener {
 		
 		btn1.setFont(new Font("굴림",Font.BOLD,12));
 		btn2.setFont(new Font("굴림",Font.BOLD,12));		
-		btn3.setFont(new Font("굴림",Font.BOLD,25));
+//		btn3.setFont(new Font("굴림",Font.BOLD,25));
 		btn4.setFont(new Font("굴림",Font.BOLD,12));
 		btn5.setFont(new Font("굴림",Font.BOLD,12));
+		
+		
+		
+		txt3.setFont(new Font("굴림",Font.BOLD,30));  //제목
+		
+
+		
 		
 		// Add_Panel_Component
 		panel.add(btn1);
 		panel.add(btn2);
-		panel.add(btn3);
+//		panel.add(btn3);
 		panel.add(btn4);
 		panel.add(btn5);
 		
 		panel.add(tbl1);
 		panel.add(tbl2);
+		panel.add(txt3);
+		
 //			panel.add(area1);
 		panel.add(scroll1);
 		panel.add(scroll2);
@@ -122,6 +146,8 @@ class GUI1 extends JFrame implements ActionListener, KeyListener {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+
+		
 	}
 
 	@Override
@@ -147,6 +173,7 @@ class GUI1 extends JFrame implements ActionListener, KeyListener {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 
 }

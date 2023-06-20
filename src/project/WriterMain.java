@@ -1,7 +1,9 @@
 package project;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
@@ -12,16 +14,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class Main {
+
+
+public class WriterMain {
 
 	public static void main(String[] args) {
-		new GUI();
+		new GUI1();
 
 	}
 
 }
 
-class GUI extends JFrame implements ActionListener, KeyListener {
+class GUI1 extends JFrame implements ActionListener, KeyListener {
 	JButton btn1;
 	JButton btn2;
 	JButton btn3;
@@ -31,7 +35,8 @@ class GUI extends JFrame implements ActionListener, KeyListener {
 	JTextArea area1;
 	JScrollPane scroll1;
 
-	GUI() {
+
+	GUI1() {
 		// Frame
 		super("글쓰기");
 		setBounds(100, 100, 1000, 800);
@@ -40,13 +45,14 @@ class GUI extends JFrame implements ActionListener, KeyListener {
 		JPanel panel = new JPanel(); // 패널생성
 		panel.setLayout(null);
 
+
 		// Component
 		btn1 = new JButton("저장");
 		btn2 = new JButton("수정");
 		btn3 = new JButton("나가기");
-		txt1 = new JTextField();
-		txt2 = new JTextField();
-		txt3 = new JTextField();
+		txt1 = new JTextField("닉네임 : ");
+		txt2 = new JTextField("제목 : ");
+		txt3 = new JTextField("내용 : ");
 		area1 = new JTextArea();
 		// area1.setBounds(10,90,210,300);
 		scroll1 = new JScrollPane(area1);
@@ -70,8 +76,15 @@ class GUI extends JFrame implements ActionListener, KeyListener {
 		txt1.addKeyListener(this);
 		txt2.addKeyListener(this);
 		txt3.addKeyListener(this);
-		area1.setEditable(false);
 		
+		btn1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				area1.append("내가 무엇을 적었을까");
+				
+			}
+		});
 		btn1.addActionListener(new ActionListener() {
 			
 			@Override
@@ -93,6 +106,9 @@ class GUI extends JFrame implements ActionListener, KeyListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {		//btn3 클릭 시 돌아가기
 				JOptionPane.showMessageDialog(null, "나가실?");
+                dispose(); // 현재 GUI 창 닫기
+                
+//                new GUI(); // GUI1으로 돌아가기
 				
 				
 
@@ -100,6 +116,12 @@ class GUI extends JFrame implements ActionListener, KeyListener {
 			}
 		});
 
+		
+		btn1.setFont(new Font("굴림",Font.BOLD,12));
+		btn2.setFont(new Font("굴림",Font.BOLD,12));		
+		btn3.setFont(new Font("굴림",Font.BOLD,12));
+		
+		
 		// Add_Panel_Component
 		panel.add(btn1);
 		panel.add(btn2);
@@ -115,6 +137,34 @@ class GUI extends JFrame implements ActionListener, KeyListener {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+	}
+
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
