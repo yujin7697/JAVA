@@ -117,19 +117,38 @@ class GUI1 extends JFrame implements ActionListener, KeyListener {
 				
 			}
 		});
-		btn1.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {		//btn1 클릭 시 저장
-				JOptionPane.showMessageDialog(null, "저장하실?");
-			}
-		});
 		
 		btn2.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {		//btn2 클릭 시 수정
 				JOptionPane.showMessageDialog(null, "수정하실?");
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver"); // 드라이버 적재
+					System.out.println("Driver Loading Success..");
+					conn = DriverManager.getConnection(url, id, pw);
+					System.out.println("DB Connected..");
+					pstmt = conn.prepareStatement("update tbl_게시판 set 글쓴이=?, 글제목 = ?,작성날짜=now() where 글내용=?");
+					pstmt.setString(1, txt1.getText());
+					pstmt.setString(2, txt2.getText());
+					pstmt.setString(3, txt3.getText());
+					int result = pstmt.executeUpdate();
+				
+					if(result>0) {
+						JOptionPane.showMessageDialog(null, "UPDATE성공", "DBCONN",
+								JOptionPane.INFORMATION_MESSAGE);
+						setVisible(false); // 프레임창닫기
+
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "UPDATE실패", "DBCONN", JOptionPane.ERROR_MESSAGE);
+						setVisible(false); // 프레임창닫기
+					}
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				} finally {
+					try {pstmt.close();} catch (Exception e1) {e1.printStackTrace();}
+				}
 			}
 		});
 		
