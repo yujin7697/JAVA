@@ -21,12 +21,12 @@ import javax.swing.JTextArea;
 public class MyWriteMain {
 
 	public static void main(String[] args) {
-		new GUI2();
+		new MyWriter_GUI();
 	}
 
 }
 
-class GUI2 extends JFrame implements ActionListener, KeyListener {
+class MyWriter_GUI extends JFrame implements ActionListener, KeyListener {
 	JButton btn1;
 	JTable tbl1;
 	JTable tbl2;
@@ -43,7 +43,7 @@ class GUI2 extends JFrame implements ActionListener, KeyListener {
 	PreparedStatement pstmt = null;		//SQL쿼리 전송용 참조변수
 	ResultSet rs = null;				//SQL쿼리 결과(SELECT결과)수신용 참조변수
 
-	GUI2() {
+	MyWriter_GUI() {
 		// Frame
 		super("내가 쓴 글");
 		setBounds(100, 100, 900, 900);
