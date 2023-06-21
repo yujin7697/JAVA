@@ -91,6 +91,9 @@ class C01GUI extends JFrame implements ActionListener,KeyListener
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==btn1) {
 //		 	스레드1 시작
+			C03Worker1 worker1 = new C03Worker1(this);	//생성된 C01GUI 객체 주소
+			Thread th1 = new Thread(worker1);			//분리된 공간에 적용
+			th1.start();								//실행
 		
 		}
 		
@@ -100,10 +103,9 @@ class C01GUI extends JFrame implements ActionListener,KeyListener
 		}
 		if(e.getSource()==btn3) {
 //		 	스레드2 시작
-			while(true) {
-				area2.append("Thread2....\n");
-				try {Thread.sleep(500);} catch (InterruptedException e1) {e1.printStackTrace();}
-			}
+			C03Worker2 worker2 = new C03Worker2(this);	//생성된 C01GUI 객체 주소
+			Thread th2 = new Thread(worker2);			//분리된 공간에 적용
+			th2.start();								//실행
 			 
 		}
 		if(e.getSource()==btn4) {
