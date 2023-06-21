@@ -63,9 +63,9 @@ class GUI1 extends JFrame implements ActionListener, KeyListener {
 		btn1 = new JButton("저장");
 		btn2 = new JButton("수정");
 		btn3 = new JButton("나가기");
-		txt1 = new JTextField("닉네임 : ");
-		txt2 = new JTextField("제목 : ");
-		txt3 = new JTextField("내용 : ");
+		txt1 = new JTextField("");
+		txt2 = new JTextField("");
+		txt3 = new JTextField("");
 		area1 = new JTextArea();
 		// area1.setBounds(10,90,210,300);
 		scroll1 = new JScrollPane(area1);
