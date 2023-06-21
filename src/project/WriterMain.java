@@ -196,27 +196,45 @@ class WriterMain_GUI extends JFrame implements ActionListener, KeyListener {
 					System.out.println("Driver Loading Success..");
 					conn = DriverManager.getConnection(url, id, pw);
 					System.out.println("DB Connected..");
-					pstmt = conn.prepareStatement("update tbl_게시판 set 글쓴이=?, 글제목 = ?,작성날짜=now() where 글내용=?");
-					pstmt.setString(1, txt1.getText());
-					pstmt.setString(2, txt2.getText());
-					pstmt.setString(3, txt3.getText());
-					int result = pstmt.executeUpdate();
-				
-					if(result>0) {
-						JOptionPane.showMessageDialog(null, "UPDATE성공", "DBCONN",
-								JOptionPane.INFORMATION_MESSAGE);
-						setVisible(false); // 프레임창닫기
-
-					}
-					else {
-						JOptionPane.showMessageDialog(null, "UPDATE실패", "DBCONN", JOptionPane.ERROR_MESSAGE);
-						setVisible(false); // 프레임창닫기
-					}
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				} finally {
-					try {pstmt.close();} catch (Exception e1) {e1.printStackTrace();}
-				}
+					// 기존 데이터 조회
+		            pstmt = conn.prepareStatement("SELECT * FROM tbl_게시판 WHERE 글제목=? AND 글쓴이=?");
+		            pstmt.setString(1, txt2.getText());
+		            pstmt.setString(2, txt1.getText());
+		            rs = pstmt.executeQuery();
+		            
+		            if (rs.next()) {
+		                // 글 제목과 글쓴이가 일치하는 데이터가 존재하는 경우
+		                int postId = rs.getInt("number");
+		                
+		                // 내용 업데이트
+		                pstmt = conn.prepareStatement("UPDATE tbl_게시판 SET 글내용=?, 작성날짜=now() WHERE number=?");
+		                pstmt.setString(1, txt3.getText());
+		                pstmt.setInt(2, postId);
+		                
+		                int result = pstmt.executeUpdate();
+		                
+		                if (result > 0) {
+		                    JOptionPane.showMessageDialog(null, "수정되었습니다.", "DBCONN", JOptionPane.INFORMATION_MESSAGE);
+//		                    setVisible(false); // 프레임 창 닫기
+		                } else {
+		                    JOptionPane.showMessageDialog(null, "수정 실패", "DBCONN", JOptionPane.ERROR_MESSAGE);
+		                    setVisible(false); // 프레임 창 닫기
+		                }
+		            } else {
+		                JOptionPane.showMessageDialog(null, "일치하는 데이터가 없습니다.", "DBCONN", JOptionPane.ERROR_MESSAGE);
+		            }
+		        } catch (Exception e1) {
+		            e1.printStackTrace();
+		        } finally {
+		            try {
+		                if (rs != null) rs.close();
+		                if (pstmt != null) pstmt.close();
+		            } catch (Exception e1) {
+		                e1.printStackTrace();
+		            }
+		            new Main_GUI();
+		            dispose();
+		        }
 			}
 		});
 		
@@ -227,7 +245,7 @@ class WriterMain_GUI extends JFrame implements ActionListener, KeyListener {
 				JOptionPane.showMessageDialog(null, "나가실?");
                 dispose(); // 현재 GUI 창 닫기
                 
-//                new GUI(); // GUI1으로 돌아가기
+                new Main_GUI(); // GUI1으로 돌아가기
 				
 				
 
