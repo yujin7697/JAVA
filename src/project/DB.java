@@ -45,7 +45,7 @@ class DB_GUI extends JFrame implements ActionListener, KeyListener {
 
 	DefaultTableModel model;
 
-	DB_GUI() {
+	DB_GUI(BoardDto dto) {
 		// Frame
 		super("클릭한 게시물");
 		setBounds(100, 100, 900, 900);
@@ -59,7 +59,8 @@ class DB_GUI extends JFrame implements ActionListener, KeyListener {
 		btn1 = new JButton("나가기");
 
 		lbl1 = new JLabel("게시물 조회");
-
+		
+		
 		area1 = new JTextArea();
 		area1.setBounds(10, 90, 210, 300);
 //		scroll1 = new JScrollPane(area1);
@@ -83,23 +84,26 @@ class DB_GUI extends JFrame implements ActionListener, KeyListener {
 			conn = DriverManager.getConnection(url, id, pw);
 			System.out.println("DB Connected..");
 
+			
+			JLabel lb1 = new JLabel("NO : " + dto.getNo());
+			lb1.setBounds(10,10,100,30);
 			String[] column1 = {"number"};
 			String[] column2 = {"글쓴이"};
 			String[] column3 = {"글제목"};
 			String[] column4 = {"글내용"};
 			String[] column5 = {"작성날짜"};
 
-			DefaultTableModel model1 = new DefaultTableModel(column1, 0);
-			DefaultTableModel model2 = new DefaultTableModel(column2, 0);
-			DefaultTableModel model3 = new DefaultTableModel(column3, 0);
-			DefaultTableModel model4 = new DefaultTableModel(column4, 0);
-			DefaultTableModel model5 = new DefaultTableModel(column5, 0);
+//			DefaultTableModel model1 = new DefaultTableModel(column1, 0);
+//			DefaultTableModel model2 = new DefaultTableModel(column2, 0);
+//			DefaultTableModel model3 = new DefaultTableModel(column3, 0);
+//			DefaultTableModel model4 = new DefaultTableModel(column4, 0);
+//			DefaultTableModel model5 = new DefaultTableModel(column5, 0);
 
-			tbl1 = new JTable(model1);
-			tbl2 = new JTable(model2);
-			tbl3 = new JTable(model3);
-			tbl4 = new JTable(model4);
-			tbl5 = new JTable(model5);
+//			tbl1 = new JTable(model1);
+//			tbl2 = new JTable(model2);
+//			tbl3 = new JTable(model3);
+//			tbl4 = new JTable(model4);
+//			tbl5 = new JTable(model5);
 
 			JScrollPane scroll1 = new JScrollPane(tbl1);
 			JScrollPane scroll2 = new JScrollPane(tbl2);
@@ -118,22 +122,23 @@ class DB_GUI extends JFrame implements ActionListener, KeyListener {
 			panel.add(scroll3);
 			panel.add(scroll4);
 			panel.add(scroll5);
-			
+			panel.add(lb1);
+
 			pstmt = conn.prepareStatement("select * from tbl_게시판");
 			rs = pstmt.executeQuery();
 
 			if (rs != null) {
 				while (rs.next()) {
-					int postNumber = rs.getInt("number");
-					String writer = rs.getString("글쓴이");
-					String title = rs.getString("글제목");
-					String content = rs.getString("글내용");
-					String date = rs.getString("작성날짜");
-					model1.addRow(new Object[]{postNumber});
-					model2.addRow(new Object[]{writer});
-					model3.addRow(new Object[]{title});
-					model4.addRow(new Object[]{content});
-					model5.addRow(new Object[]{date});
+//					int postNumber = rs.getInt("number");
+//					String writer = rs.getString("글쓴이");
+//					String title = rs.getString("글제목");
+//					String content = rs.getString("글내용");
+//					String date = rs.getString("작성날짜");
+//					model1.addRow(new Object[]{postNumber});
+//					model2.addRow(new Object[]{writer});
+//					model3.addRow(new Object[]{title});
+//					model4.addRow(new Object[]{content});
+//					model5.addRow(new Object[]{date});
 					
 				}
 			}
