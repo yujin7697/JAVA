@@ -101,24 +101,25 @@ class DB_GUI extends JFrame implements ActionListener, KeyListener {
 			tbl3 = new JTable(model3);
 			tbl4 = new JTable(model4);
 			tbl5 = new JTable(model5);
-			
+
 			JScrollPane scroll1 = new JScrollPane(tbl1);
 			JScrollPane scroll2 = new JScrollPane(tbl2);
 			JScrollPane scroll3 = new JScrollPane(tbl3);
 			JScrollPane scroll4 = new JScrollPane(tbl4);
 			JScrollPane scroll5 = new JScrollPane(tbl5);
-			
+
 			lbl1.setBounds(10, 10, 400, 80); // 대제목
-			scroll1.setBounds(10, 100, 100, 30);    // 게시글번호 칸
-	        scroll2.setBounds(130, 100, 730, 30);  // 작성자 칸
-	        scroll3.setBounds(10, 150, 850, 30);   // 제목 칸
-	        scroll4.setBounds(10, 200, 850, 530);  // 내용 칸
-	        scroll5.setBounds(10, 750, 850, 30);   // 시간 칸
-	        panel.add(scroll1);
-	        panel.add(scroll2);
-	        panel.add(scroll3);
-	        panel.add(scroll4);
-	        panel.add(scroll5);
+			scroll1.setBounds(10, 100, 100, 30); // 게시글번호 칸
+			scroll2.setBounds(130, 100, 730, 30); // 작성자 칸
+			scroll3.setBounds(10, 150, 850, 30); // 제목 칸
+			scroll4.setBounds(10, 200, 850, 530); // 내용 칸
+			scroll5.setBounds(10, 750, 850, 30); // 시간 칸
+			panel.add(scroll1);
+			panel.add(scroll2);
+			panel.add(scroll3);
+			panel.add(scroll4);
+			panel.add(scroll5);
+			
 			pstmt = conn.prepareStatement("select * from tbl_게시판");
 			rs = pstmt.executeQuery();
 
@@ -126,20 +127,8 @@ class DB_GUI extends JFrame implements ActionListener, KeyListener {
 				while (rs.next()) {
 					Object[] rowData = { rs.getInt("number"), rs.getString("글쓴이"), rs.getString("글제목"),
 							rs.getString("글내용"), rs.getString("작성날짜") };
-//						model.addRow(rowData);
 				}
-//						System.out.print(rs.getInt("number")+" ");
-//						System.out.print(rs.getString("이름")+" ");
-//						System.out.print(rs.getString("제목")+" ");
-//						System.out.print(rs.getString("내용")+" ");
-//						System.out.print(rs.getString("작성날짜")+" ");
 			}
-
-//					tbl1.getColumnModel().getColumn(0).setMaxWidth(20);
-//					tbl2.getColumnModel().getColumn(1).setMaxWidth(30);
-//					tbl3.getColumnModel().getColumn(2).setMaxWidth(100);
-//					tbl4.getColumnModel().getColumn(3).setMaxWidth(300);
-//					tbl5.getColumnModel().getColumn(4).setMaxWidth(50);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -165,17 +154,6 @@ class DB_GUI extends JFrame implements ActionListener, KeyListener {
 		// ------------------------------------------------------------------
 
 		// Positioning
-//		Color col = new Color(71, 100, 109); // RGB
-//		Color col1 = new Color(80, 15, 109); // RGB
-//		Color col2 = new Color(90, 150, 109); // RGB
-//		Color col3 = new Color(100, 80, 109); // RGB
-//		Color col4 = new Color(110, 199, 10); // RGB
-//		tbl1.setBackground(col);
-//		tbl2.setBackground(col1);
-//		tbl3.setBackground(col2);
-//		tbl4.setBackground(col3);
-//		tbl5.setBackground(col4);
-//		scroll1.setBounds(10, 100, 860, 680);		//작성 글 
 
 		btn1.setBounds(770, 800, 90, 30); // 나가기
 
@@ -206,15 +184,6 @@ class DB_GUI extends JFrame implements ActionListener, KeyListener {
 
 		panel.add(lbl1);
 
-//		panel.add(tbl1);
-//		panel.add(tbl2);
-//		panel.add(tbl3);
-//		panel.add(tbl4);
-//		panel.add(tbl5);
-//			panel.add(area1);
-//		panel.add(scroll1);
-//		panel.add(scroll2);
-
 		panel.add(srch);
 
 		// Frame
@@ -225,15 +194,19 @@ class DB_GUI extends JFrame implements ActionListener, KeyListener {
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {}
+	public void keyTyped(KeyEvent e) {
+	}
 
 	@Override
-	public void keyPressed(KeyEvent e) {}
+	public void keyPressed(KeyEvent e) {
+	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {}
+	public void keyReleased(KeyEvent e) {
+	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {}
+	public void actionPerformed(ActionEvent e) {
+	}
 
 }
