@@ -5,7 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -50,7 +51,7 @@ class Main_GUI extends JFrame implements ActionListener, KeyListener {
 
 	Main_GUI() {
 		// Frame
-		super("다 같이 게시판");
+		super("");
 		setBounds(100, 100, 900, 900);
 
 		// Panel
@@ -117,7 +118,29 @@ class Main_GUI extends JFrame implements ActionListener, KeyListener {
 				System.exit(0);
 			}
 		});
-		
+		btn5.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        String searchKeyword = srch.getText();
+		        boolean found = false;
+
+		        // Search for the keyword in the table's title column
+		        for (int row = 0; row < model.getRowCount(); row++) {
+		            String title = (String) model.getValueAt(row, 2); // Assuming title column index is 2
+		            if (title.equalsIgnoreCase(searchKeyword)) {
+		                found = true;
+		                break;
+		            }
+		        }
+
+		        if (found) {
+		            new Search_GUI();
+		            dispose();
+		        } else {
+		            JOptionPane.showMessageDialog(null, "검색된 결과가 없습니다.");
+		        }
+		    }
+		});
 		
 		
 		tbl1.addKeyListener(this);
@@ -170,7 +193,7 @@ class Main_GUI extends JFrame implements ActionListener, KeyListener {
 			conn = DriverManager.getConnection(url, id, pw); // 성공하면 Connection객체를 반환
 			System.out.println("DB Connected!");
 
-			String[] column = { "No", "글쓴이", "글제목", "작성날짜" };
+			String[] column = { "number", "글쓴이", "글제목", "작성날짜" };
 			Object[][] data = {};
 			
 			model = new DefaultTableModel(data,column) {
@@ -211,6 +234,20 @@ class Main_GUI extends JFrame implements ActionListener, KeyListener {
 			panel.add(scroll);
 			panel.setLayout(null);
 			
+			table.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					int selectedRow = table.getSelectedRow();
+					int selectedColumn = table.getSelectedColumn();
+
+					// 선택한 셀의 데이터 가져오기
+					Object selectedData = table.getValueAt(selectedRow, selectedColumn);
+					System.out.println("선택한 데이터: " + selectedData);
+					new DB_GUI();
+
+					
+				}
+			});
 			
 			
 		} catch (Exception e) {
