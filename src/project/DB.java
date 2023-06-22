@@ -1,6 +1,5 @@
 package project;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -84,11 +83,11 @@ class DB_GUI extends JFrame implements ActionListener, KeyListener {
 			conn = DriverManager.getConnection(url, id, pw);
 			System.out.println("DB Connected..");
 
-			String[] column1 = { "number" };
-			String[] column2 = { "글쓴이" };
-			String[] column3 = { "글제목" };
-			String[] column4 = { "글내용" };
-			String[] column5 = { "작성날짜" };
+			String[] column1 = {"number"};
+			String[] column2 = {"글쓴이"};
+			String[] column3 = {"글제목"};
+			String[] column4 = {"글내용"};
+			String[] column5 = {"작성날짜"};
 
 			DefaultTableModel model1 = new DefaultTableModel(column1, 0);
 			DefaultTableModel model2 = new DefaultTableModel(column2, 0);
@@ -108,12 +107,12 @@ class DB_GUI extends JFrame implements ActionListener, KeyListener {
 			JScrollPane scroll4 = new JScrollPane(tbl4);
 			JScrollPane scroll5 = new JScrollPane(tbl5);
 
-			lbl1.setBounds(10, 10, 400, 80); // 대제목
-			scroll1.setBounds(10, 100, 100, 30); // 게시글번호 칸
-			scroll2.setBounds(130, 100, 730, 30); // 작성자 칸
-			scroll3.setBounds(10, 150, 850, 30); // 제목 칸
+			lbl1.setBounds(10, 10, 400, 50); // 대제목
+			scroll1.setBounds(10, 100, 100, 50); // 게시글번호 칸
+			scroll2.setBounds(130, 100, 730, 50); // 작성자 칸
+			scroll3.setBounds(10, 150, 850, 50); // 제목 칸
 			scroll4.setBounds(10, 200, 850, 530); // 내용 칸
-			scroll5.setBounds(10, 750, 850, 30); // 시간 칸
+			scroll5.setBounds(10, 750, 850, 50); // 시간 칸
 			panel.add(scroll1);
 			panel.add(scroll2);
 			panel.add(scroll3);
@@ -125,10 +124,20 @@ class DB_GUI extends JFrame implements ActionListener, KeyListener {
 
 			if (rs != null) {
 				while (rs.next()) {
-					Object[] rowData = { rs.getInt("number"), rs.getString("글쓴이"), rs.getString("글제목"),
-							rs.getString("글내용"), rs.getString("작성날짜") };
+					int postNumber = rs.getInt("number");
+					String writer = rs.getString("글쓴이");
+					String title = rs.getString("글제목");
+					String content = rs.getString("글내용");
+					String date = rs.getString("작성날짜");
+					model1.addRow(new Object[]{postNumber});
+					model2.addRow(new Object[]{writer});
+					model3.addRow(new Object[]{title});
+					model4.addRow(new Object[]{content});
+					model5.addRow(new Object[]{date});
+					
 				}
 			}
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
