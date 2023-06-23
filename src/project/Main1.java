@@ -119,27 +119,28 @@ class Main_GUI extends JFrame implements ActionListener, KeyListener {
 			}
 		});
 		btn5.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		        String searchKeyword = srch.getText();
-		        boolean found = false;
+			 @Override
+			    public void actionPerformed(ActionEvent e) {
+			        String searchKeyword = srch.getText();
+			        boolean found = false;
+			        int count=0;
 
-		        // Search for the keyword in the table's title column
-		        for (int row = 0; row < model.getRowCount(); row++) {
-		            String title = (String) model.getValueAt(row, 2); // Assuming title column index is 2
-		            if (title.equalsIgnoreCase(searchKeyword)) {
-		                found = true;
-		                break;
-		            }
-		        }
+			        for (int row = 0; row < model.getRowCount(); row++) {
+			            String title = (String) model.getValueAt(row, 2);
+			            String author = (String) model.getValueAt(row, 1);
+			            if (title.equalsIgnoreCase(searchKeyword) || author.equalsIgnoreCase(searchKeyword)) {
+			                count++;
+			            }
+			        }
 
-		        if (found) {
-		            new Search_GUI();
-		            dispose();
-		        } else {
-		            JOptionPane.showMessageDialog(null, "검색된 결과가 없습니다.");
-		        }
-		    }
+			        if (count > 0) {
+			            JOptionPane.showMessageDialog(null, count + "개의 게시물이 검색되었습니다.");
+			            new Search_GUI(searchKeyword, model);
+			            dispose();
+			        } else {
+			            JOptionPane.showMessageDialog(null, "검색된 결과가 없습니다.");
+			        }
+			    }
 		});
 		
 		
@@ -165,7 +166,7 @@ class Main_GUI extends JFrame implements ActionListener, KeyListener {
 //		panel.add(tbl2);
 		panel.add(txt3);	//다 같이 게시판 제목
 
-//			panel.add(area1);
+//		panel.add(area1);
 //		panel.add(scroll1);	//게시물 목록뜰 때 더블클릭 안되게 할 수 있음
 //		panel.add(scroll2);
 

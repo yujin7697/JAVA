@@ -15,28 +15,35 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 public class Search {
 
 	public static void main(String[] args) {
-		new Search_GUI();
+	    DefaultTableModel model = new DefaultTableModel();
+	    String searchKeyword = ""; // 원하는 검색 키워드를 입력하세요
+	    new Search_GUI(searchKeyword, model);
 	}
 
 }
 
 class Search_GUI extends JFrame implements ActionListener, KeyListener {
+	
+
 	JButton btn1;
 
 	JLabel lbl1;
 	JTable tbl2;
+	DefaultTableModel searchModel;
 	
-
 	JTextArea area1;
 	
 	JScrollPane scroll1;
 	JScrollPane scroll2;
 
-	Search_GUI() {
+	Search_GUI(String searchKeyword, DefaultTableModel model) {
+		
+
 		// Frame
 		super("검색된 글");
 		setBounds(100, 100, 900, 900);
@@ -50,7 +57,7 @@ class Search_GUI extends JFrame implements ActionListener, KeyListener {
 		// Component
 		btn1 = new JButton("나가기");
 
-		lbl1 = new JLabel("검색 결과");
+		lbl1 = new JLabel();
 		tbl2 = new JTable();
 
 		area1 = new JTextArea();
@@ -59,12 +66,25 @@ class Search_GUI extends JFrame implements ActionListener, KeyListener {
 		scroll2 = new JScrollPane(area1);
 		
 		JTextField srch = new JTextField();
-
+		searchModel = new DefaultTableModel();
 		// Positioning
 		lbl1.setBounds(10, 10, 860, 80);		//제목
 		tbl2.setBounds(10, 100, 860, 680);		//작성 글 
 		
-
+		lbl1.setText("'"+searchKeyword+"'" + "(으)로 검색된 결과입니다.");
+        for (int row = 0; row < model.getRowCount(); row++) {
+            String title = (String) model.getValueAt(row, 2);
+            String author = (String) model.getValueAt(row, 1);
+            if (title.equalsIgnoreCase(searchKeyword) || author.equalsIgnoreCase(searchKeyword)) {
+                Object[] rowData = {
+                    model.getValueAt(row, 0),
+                    author,
+                    title,
+                    model.getValueAt(row, 3)
+                };
+                searchModel.addRow(rowData);
+            }
+        }
 		
 		btn1.setBounds(770, 800, 90, 30);		//나가기
 
@@ -85,7 +105,7 @@ class Search_GUI extends JFrame implements ActionListener, KeyListener {
                 new Main_GUI(); // GUI1으로 돌아가기
 			}
 		});		//글작성
-
+		
 		lbl1.addKeyListener(this);
 		area1.setEditable(false);
 		
