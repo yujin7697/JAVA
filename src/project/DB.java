@@ -26,26 +26,21 @@ public class DB extends MyWriter_GUI {
 	public static void main(String[] args) {
 		new DB_GUI();
 	}
+
 }
 
 class DB_GUI extends JFrame implements ActionListener, KeyListener {
 	JButton btn1;
-
 	JLabel lbl1;
-	JTable tbl1;
-	JTable tbl2;
-	JTable tbl3;
-	JTable tbl4;
-	JTable tbl5;
-
+	JLabel tbl1;JLabel tbl2;JLabel tbl3;JTable tbl4;JLabel tbl5;
 	JTextArea area1;
-
 	JScrollPane scroll1;
 //	JScrollPane scroll2;
-
-	DefaultTableModel model;
-
-	DB_GUI(BoardDto dto) {
+//	DefaultTableModel model;
+	int number; String writer; String title; String date;
+	
+	DB_GUI(int number, String writer, String title, String date) {
+		
 		// Frame
 		super("클릭한 게시물");
 		setBounds(100, 100, 900, 900);
@@ -83,52 +78,54 @@ class DB_GUI extends JFrame implements ActionListener, KeyListener {
 			System.out.println("Driver Loading Success..");
 			conn = DriverManager.getConnection(url, id, pw);
 			System.out.println("DB Connected..");
-
 			
-			JLabel lb1 = new JLabel("NO : " + dto.getNo());
-			lb1.setBounds(10,10,100,30);
-			String[] column1 = {"number"};
-			String[] column2 = {"글쓴이"};
-			String[] column3 = {"글제목"};
-			String[] column4 = {"글내용"};
-			String[] column5 = {"작성날짜"};
+			tbl1 = new JLabel("NO : " + number);
+			tbl2 = new JLabel("글쓴이 :" + writer);
+			tbl3 = new JLabel("글제목 : " + title);
+			tbl5 = new JLabel("작성날짜 : " + date);
+			
 
+//			String[] column1 = {"number"};
+//			String[] column2 = {"글쓴이"};
+//			String[] column3 = {"글제목"};
+			String[] column4 = {"글내용"};
+//			String[] column5 = {"작성날짜"};
+//
 //			DefaultTableModel model1 = new DefaultTableModel(column1, 0);
 //			DefaultTableModel model2 = new DefaultTableModel(column2, 0);
 //			DefaultTableModel model3 = new DefaultTableModel(column3, 0);
-//			DefaultTableModel model4 = new DefaultTableModel(column4, 0);
+			DefaultTableModel model4 = new DefaultTableModel(column4, 0);
 //			DefaultTableModel model5 = new DefaultTableModel(column5, 0);
-
+//
 //			tbl1 = new JTable(model1);
 //			tbl2 = new JTable(model2);
 //			tbl3 = new JTable(model3);
-//			tbl4 = new JTable(model4);
+			tbl4 = new JTable(model4);
 //			tbl5 = new JTable(model5);
 
-			JScrollPane scroll1 = new JScrollPane(tbl1);
-			JScrollPane scroll2 = new JScrollPane(tbl2);
-			JScrollPane scroll3 = new JScrollPane(tbl3);
+//			JScrollPane scroll1 = new JScrollPane(tbl1);
+//			JScrollPane scroll2 = new JScrollPane(tbl2);
+//			JScrollPane scroll3 = new JScrollPane(tbl3);
 			JScrollPane scroll4 = new JScrollPane(tbl4);
-			JScrollPane scroll5 = new JScrollPane(tbl5);
+//			JScrollPane scroll5 = new JScrollPane(tbl5);
 
-			lbl1.setBounds(10, 10, 400, 50); // 대제목
-			scroll1.setBounds(10, 100, 100, 50); // 게시글번호 칸
-			scroll2.setBounds(130, 100, 730, 50); // 작성자 칸
-			scroll3.setBounds(10, 150, 850, 50); // 제목 칸
+			lbl1.setBounds(10, 30, 400, 50); // 대제목
+			tbl1.setBounds(10, 100, 100, 50); // 게시글번호 칸
+			tbl2.setBounds(130, 100, 730, 50); // 작성자 칸
+			tbl3.setBounds(10, 150, 850, 50); // 제목 칸
+			tbl5.setBounds(10, 750, 850, 50); // 시간 칸
 			scroll4.setBounds(10, 200, 850, 530); // 내용 칸
-			scroll5.setBounds(10, 750, 850, 50); // 시간 칸
-			panel.add(scroll1);
-			panel.add(scroll2);
-			panel.add(scroll3);
+			panel.add(tbl1);
+			panel.add(tbl2);
+			panel.add(tbl3);
+			panel.add(tbl5);
 			panel.add(scroll4);
-			panel.add(scroll5);
-			panel.add(lb1);
 
-			pstmt = conn.prepareStatement("select * from tbl_게시판");
-			rs = pstmt.executeQuery();
+//			pstmt = conn.prepareStatement("select * from tbl_게시판");
+//			rs = pstmt.executeQuery();
 
-			if (rs != null) {
-				while (rs.next()) {
+//			if (rs != null) {
+//				while (rs.next()) {
 //					int postNumber = rs.getInt("number");
 //					String writer = rs.getString("글쓴이");
 //					String title = rs.getString("글제목");
@@ -139,9 +136,9 @@ class DB_GUI extends JFrame implements ActionListener, KeyListener {
 //					model3.addRow(new Object[]{title});
 //					model4.addRow(new Object[]{content});
 //					model5.addRow(new Object[]{date});
-					
-				}
-			}
+//					
+//				}
+//			}
 			
 
 		} catch (Exception e) {
@@ -191,7 +188,7 @@ class DB_GUI extends JFrame implements ActionListener, KeyListener {
 		tbl2.setFont(new Font("굴림", Font.BOLD, 15));
 		tbl3.setFont(new Font("굴림", Font.BOLD, 17));
 		tbl4.setFont(new Font("굴림", Font.BOLD, 20));
-		tbl5.setFont(new Font("굴림", Font.BOLD, 10));
+		tbl5.setFont(new Font("굴림", Font.BOLD, 20));
 
 		// Add_Panel_Component
 		panel.add(btn1);
@@ -208,19 +205,15 @@ class DB_GUI extends JFrame implements ActionListener, KeyListener {
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-	}
+	public void keyTyped(KeyEvent e) {}
 
 	@Override
-	public void keyPressed(KeyEvent e) {
-	}
+	public void keyPressed(KeyEvent e) {}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-	}
+	public void keyReleased(KeyEvent e) {}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-	}
+	public void actionPerformed(ActionEvent e) {}
 
 }

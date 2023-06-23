@@ -239,17 +239,18 @@ class Main_GUI extends JFrame implements ActionListener, KeyListener {
 				public void mouseClicked(MouseEvent e) {
 					int selectedRow = table.getSelectedRow();
 					int selectedColumn = table.getSelectedColumn();
-//					
-					String postNumber = table.getValueAt(selectedRow, 0).toString(); // 게시물 번호
-					String writer = table.getValueAt(selectedRow, 1).toString(); // 작성자
-					String title = table.getValueAt(selectedRow, 2).toString(); // 제목
-					String content = table.getValueAt(selectedRow, 3).toString(); // 내용
-					String date = table.getValueAt(selectedRow, 4).toString(); // 작성 날짜
-//					// 선택한 셀의 데이터 가져오기
-					Object selectedData = table.getValueAt(selectedRow, selectedColumn);
-//					System.out.println("선택한 데이터: " + selectedData);
-					new DB_GUI(new BoardDto(postNumber,writer,title,content,date));
 
+//					// 선택한 셀의 데이터 가져오기
+					int number = (int) table.getValueAt(selectedRow, 0);
+			        String writer = (String) table.getValueAt(selectedRow, 1);
+			        String title = (String) table.getValueAt(selectedRow, 2);
+			        String date = (String) table.getValueAt(selectedRow, 3);
+			        // 변수 값 확인
+			        System.out.println("Number: " + number);
+			        System.out.println("Writer: " + writer);
+			        System.out.println("Title: " + title);
+			        System.out.println("Date: " + date);
+					new DB_GUI(number, writer, title, date);
 					
 				}
 			});
