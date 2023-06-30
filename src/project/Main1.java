@@ -12,7 +12,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,13 +28,12 @@ public class Main1 {
 	public static void main(String[] args) {
 		new Main_GUI();
 	}
-
 }
 
 class Main_GUI extends JFrame implements ActionListener, KeyListener {
 	JButton btn1;
 	JButton btn2;
-//	JButton btn3;
+	JButton btn3;	//로그인
 	JButton btn4;
 	JButton btn5;
 
@@ -62,11 +60,12 @@ class Main_GUI extends JFrame implements ActionListener, KeyListener {
 		// Component
 		btn1 = new JButton("글 작성");
 		btn2 = new JButton("내가 쓴글");
-		btn4 = new JButton("종료");
+		btn3 = new JButton("로그인");
+		btn4 = new JButton("회원가입");
 		btn5 = new JButton("검색");
 		tbl1 = new JTable();
 		tbl2 = new JTable();
-		txt3 = new JLabel("다 같이 게시판");
+		txt3 = new JLabel("게시판");
 		area1 = new JTextArea();
 		// area1.setBounds(10,90,210,300);
 		scroll1 = new JScrollPane(area1);
@@ -81,8 +80,8 @@ class Main_GUI extends JFrame implements ActionListener, KeyListener {
 
 		btn1.setBounds(680, 80, 90, 30); // 글작성
 		btn2.setBounds(780, 80, 90, 30); // 내가 쓴 글
-//		btn3.setBounds(10, 10, 860, 60);		//제목
-		btn4.setBounds(770, 800, 90, 30); // 나가기
+		btn3.setBounds(680, 800, 90, 30);	//로그인
+		btn4.setBounds(770, 800, 90, 30); // 회원가입
 		btn5.setBounds(160, 800, 60, 30); // 검색
 
 		scroll1.setBounds(10, 130, 860, 200); // 인기글 스크롤
@@ -108,14 +107,22 @@ class Main_GUI extends JFrame implements ActionListener, KeyListener {
 				dispose();
 			}
 		});
-//		btn2.addActionListener(this);		//내가 쓴 글
-//		btn3.addActionListener(this);		//제목
+		
+		// 로그인 화면으로 이동
+		btn3.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new Login_GUI();
+				dispose();
+			}
+		});
+		// 회원가입 화면으로 이동
 		btn4.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) { // 종료
-				JOptionPane.showMessageDialog(null, "프로그램 종료하실?");
-				System.exit(0);
+			public void actionPerformed(ActionEvent e) {
+
 			}
 		});
 		btn5.addActionListener(new ActionListener() {
@@ -149,7 +156,7 @@ class Main_GUI extends JFrame implements ActionListener, KeyListener {
 
 		btn1.setFont(new Font("굴림", Font.BOLD, 12));
 		btn2.setFont(new Font("굴림", Font.BOLD, 12));
-//		btn3.setFont(new Font("굴림",Font.BOLD,25));
+		btn3.setFont(new Font("굴림",Font.BOLD,12));
 		btn4.setFont(new Font("굴림", Font.BOLD, 12));
 		btn5.setFont(new Font("굴림", Font.BOLD, 12));
 
@@ -158,7 +165,7 @@ class Main_GUI extends JFrame implements ActionListener, KeyListener {
 		// Add_Panel_Component
 		panel.add(btn1);
 		panel.add(btn2);
-//		panel.add(btn3);
+		panel.add(btn3);
 		panel.add(btn4);
 		panel.add(btn5);
 
@@ -206,7 +213,7 @@ class Main_GUI extends JFrame implements ActionListener, KeyListener {
 			};
 
 			// 쿼리문
-			pstmt = conn.prepareStatement("select * from tbl_게시판");
+		pstmt = conn.prepareStatement("select * from tbl_게시판");
 
 			rs = pstmt.executeQuery();
 
@@ -235,6 +242,7 @@ class Main_GUI extends JFrame implements ActionListener, KeyListener {
 			panel.add(scroll);
 			panel.setLayout(null);
 			
+//			게시물 셀 클릭시 이벤트
 			table.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
